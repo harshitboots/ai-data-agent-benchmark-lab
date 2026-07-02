@@ -1,0 +1,43 @@
+id: retail_sql_001
+title: Find top repeat customers by category
+category: sql_analytics
+difficulty: medium
+domain: retail
+tools_allowed:
+  - sql
+  - duckdb
+input_files:
+  - customers.csv
+  - orders.csv
+  - products.csv
+expected_output: expected_output.csv
+time_limit_seconds: 120
+max_cost_usd: 0.25
+description: >
+  You are given customers, orders, and products tables for a retail
+  business (see input/). Using only orders placed between 2023-06-01 and
+  2024-05-31 inclusive (the trailing 12 months as of the dataset's
+  reference date, 2024-06-01 — see metadata.json), find every "repeat"
+  customer per product category: a customer with more than one valid
+  order in that category. Rank repeat customers within each category by
+  total spend (quantity * unit_price, summed), highest first.
+
+  A valid order is one that is not cancelled and does not belong to a
+  test customer (customers.is_test_customer = true).
+
+  Output columns, in this order: category, customer_id, customer_name,
+  order_count, total_spend.
+success_criteria:
+  - SQL executes successfully against the provided CSVs
+  - Output matches expected_output.csv exactly, including row order
+  - Cancelled orders are excluded from spend and order-count totals
+  - Test customers are excluded entirely
+  - Orders outside the 2023-06-01 to 2024-05-31 window are excluded
+  - Only customers with more than one valid order in a category are
+    included (no one-off purchases)
+scoring:
+  execution: 30
+  correctness: 40
+  efficiency: 10
+  explanation: 10
+  cost_latency: 10

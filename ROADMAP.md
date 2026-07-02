@@ -15,11 +15,15 @@ update the checkboxes as phases land instead of trusting memory or chat logs.
 - [x] GitHub repository created and Phase 0 pushed
 
 ## Phase 1 — Task schema & CLI skeleton (Day 2–3)
-- [ ] `task.yaml` schema (Pydantic models) shared by every task
-- [ ] `arena/task_loader.py`, `arena/config.py`
-- [ ] `arena/cli.py` (Typer) with `arena list-tasks` and `arena show-task`
-- [ ] First real task: `tasks/sql_analytics/retail_sql_001/` with synthetic
-      retail dataset (customers, orders, products)
+- [x] `task.yaml` schema (Pydantic models) shared by every task
+- [x] `arena/task_loader.py`, `arena/config.py`
+- [x] `arena/cli.py` (Typer) with `arena list-tasks` and `arena show-task`
+- [x] First real task: `tasks/sql_analytics/retail_sql_001/` with synthetic
+      retail dataset (customers, orders, products), hand-verified expected
+      output
+- [x] `tasks/_template/` (moved up from Phase 4 — needed as soon as the
+      schema exists so contributors aren't blocked)
+- [x] `tests/test_task_loader.py`
 
 ## Phase 2 — Evaluation engine (Day 4–5)
 - [ ] `connectors/duckdb/` connector
@@ -36,7 +40,6 @@ update the checkboxes as phases land instead of trusting memory or chat logs.
 - [ ] `.github/workflows/update-leaderboard.yml`
 
 ## Phase 4 — More task categories (Day 7–8)
-- [ ] `tasks/_template/` for contributors
 - [ ] PySpark task + `pyspark_evaluator.py`
 - [ ] PII detection task + `pii_evaluator.py`
 - [ ] Data quality task + `data_quality_evaluator.py`

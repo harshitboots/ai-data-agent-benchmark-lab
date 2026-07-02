@@ -1,0 +1,9 @@
+customer_id,name,email,is_test_customer,signup_date
+1,Alice Smith,alice@example.com,false,2022-01-15
+2,Bob Jones,bob@example.com,false,2022-03-10
+3,Carla Diaz,carla@example.com,false,2022-05-22
+4,Test Account,test@internal.example.com,true,2023-01-01
+5,David Lee,david@example.com,false,2022-07-08
+6,Emma Wright,emma@example.com,false,2022-09-19
+7,Farid Khan,farid@example.com,false,2022-11-30
+8,Grace Kim,grace@example.com,false,2023-02-14

@@ -1,0 +1,5 @@
+category,customer_id,customer_name,order_count,total_spend
+Electronics,1,Alice Smith,2,130.00
+Fitness,3,Carla Diaz,3,175.00
+Home,8,Grace Kim,3,230.00
+Home,5,David Lee,2,150.00

@@ -1,0 +1,41 @@
+# Template for a new benchmark task.
+#
+# Copy this whole tasks/_template/ folder to tasks/<category>/<task_id>/
+# and fill in every field below. <category> must be one of the existing
+# category folders under tasks/ (or a new one, discussed in an issue
+# first). This file is parsed into arena.schema.TaskSpec — keep field
+# names and types exactly as shown.
+
+id: category_shortname_001          # unique, snake_case, ends in a zero-padded number
+title: Short human-readable task title
+category: sql_analytics             # must match the parent folder name
+difficulty: easy                    # easy | medium | hard
+domain: retail                      # retail | healthcare_synthetic | finance_synthetic | ecommerce | telecom | logistics | education | ...
+
+tools_allowed:
+  - sql                             # whatever tools/languages the agent is allowed to use
+
+input_files:
+  - customers.csv                   # every file under input/ that the agent should be given
+
+expected_output: expected_output.csv  # filename under expected/
+time_limit_seconds: 120             # wall-clock budget for the agent to attempt the task
+max_cost_usd: 0.25                  # budget above which the run is penalized/failed
+
+description: >
+  Plain-language description of the task: what data the agent has, what
+  it must produce, and every rule/edge case it needs to handle (date
+  windows, exclusions, tie-breaking, formatting). Be explicit — this is
+  the only instruction the agent gets.
+
+success_criteria:
+  - List every condition that makes an answer correct, one per line.
+  - Include execution success, output format, and each business rule.
+
+scoring:
+  execution: 30       # did it run at all
+  correctness: 40      # does the output match expected_output
+  efficiency: 10       # e.g. query plan / no full scans where avoidable
+  explanation: 10      # quality of the agent's reasoning/explanation
+  cost_latency: 10     # stayed within max_cost_usd and a reasonable latency
+  # the five weights above must sum to 100
