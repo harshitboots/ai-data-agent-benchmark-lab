@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this benchmark lab in research or evaluation work, please cite it as below."
+title: "AI Data Agent Benchmark Lab"
+authors:
+  - family-names: "Tripathi"
+    given-names: "Harshit"
+date-released: 2026-07-02
+url: "https://github.com/harshitboots/ai-data-agent-benchmark-lab"
+license: Apache-2.0
+keywords:
+  - ai-agents
+  - benchmark
+  - data-engineering
+  - sql
+  - pyspark
+  - dbt
+  - rag
+  - evaluation
