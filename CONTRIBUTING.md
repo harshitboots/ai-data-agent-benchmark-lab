@@ -33,6 +33,15 @@ pytest
 - [ ] The baseline agent can run against the task (even if it scores low)
 - [ ] `README.md` explains the task in plain language
 
+## Branch protection
+
+`main` is protected: nobody can push directly to it, and every pull request
+needs at least **1 approving review** before it can be merged. Stale
+approvals are dismissed automatically when new commits are pushed, and
+force-pushes/deletion of `main` are disabled. (The repo owner can bypass
+this for solo maintenance work, but the expectation for everyone else,
+including new maintainers, is PR + review, no exceptions.)
+
 ## Pull request review
 
 Every PR is checked (locally and in CI) for:
