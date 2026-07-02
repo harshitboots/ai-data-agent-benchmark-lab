@@ -1,5 +1,7 @@
 # AI Data Agent Benchmark Lab
 
+![AI Data Agent Benchmark Lab](assets/thumbnail.png)
+
 > The open benchmark lab for testing AI agents on real-world data engineering and analytics workflows.
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
