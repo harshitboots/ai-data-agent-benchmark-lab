@@ -1,6 +1,6 @@
 # AI Data Agent Benchmark Lab
 
-![AI Data Agent Benchmark Lab](assets/thumbnail.png)
+![AI Data Agent Benchmark Lab](docs/images/thumbnail.png)
 
 > The open benchmark lab for testing AI agents on real-world data engineering and analytics workflows.
 
