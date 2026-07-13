@@ -1,0 +1,33 @@
+name: Feature request
+description: Propose a new capability for the CLI, scoring engine, or evaluators.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: What can't you do today that this would enable?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Rough shape of the change. Doesn't need to be a full design.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - CLI (arena/)
+        - Evaluators
+        - Connectors
+        - Scoring / leaderboard
+        - Docs
+        - Other
+    validations:
+      required: true

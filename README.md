@@ -4,10 +4,25 @@
 
 > The open benchmark lab for testing AI agents on real-world data engineering and analytics workflows.
 
+[![Test](https://github.com/harshitboots/ai-data-agent-benchmark-lab/actions/workflows/test.yml/badge.svg)](https://github.com/harshitboots/ai-data-agent-benchmark-lab/actions/workflows/test.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](pyproject.toml)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-261230.svg)](https://github.com/astral-sh/ruff)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen)](CONTRIBUTING.md)
 [![Status: Building in public](https://img.shields.io/badge/status-building%20in%20public-orange)](ROADMAP.md)
+
+## Contents
+
+- [Why this exists](#why-this-exists)
+- [Who is it for?](#who-is-it-for)
+- [Quick start](#quick-start)
+- [What can be benchmarked](#what-can-be-benchmarked)
+- [How scoring works](#how-scoring-works)
+- [Architecture](#architecture)
+- [Enterprise / private use](#enterprise--private-use)
+- [Project status](#project-status)
+- [How to contribute](#how-to-contribute)
+- [License](#license)
 
 ## Why this exists
 

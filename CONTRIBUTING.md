@@ -13,6 +13,14 @@ pip install -e ".[dev]"
 pytest
 ```
 
+Optional but recommended: install the pre-commit hooks so `ruff` runs
+automatically before each commit (the same checks CI runs).
+
+```bash
+pip install pre-commit
+pre-commit install
+```
+
 ## Ways to contribute
 
 | Path | Where to start |

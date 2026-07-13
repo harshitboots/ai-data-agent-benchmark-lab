@@ -1,0 +1,38 @@
+name: Task proposal
+description: Propose a new benchmark task (see CONTRIBUTING.md's "Add a benchmark task" path).
+labels: ["task"]
+body:
+  - type: input
+    id: category
+    attributes:
+      label: Category
+      description: e.g. sql_analytics, pyspark_transformations, rag_pdf, pii_detection.
+    validations:
+      required: true
+
+  - type: input
+    id: domain
+    attributes:
+      label: Domain
+      description: e.g. retail, healthcare, finance. Must use synthetic data only.
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Task description
+      description: What should the agent be asked to do, and what makes it a good test?
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: Input data will be synthetic (no real or scraped data)
+        - label: I can provide a hand-verified expected output
+        - label: I've read tasks/_template/ and docs/dataset-policy.md
+    validations:
+      required: true
