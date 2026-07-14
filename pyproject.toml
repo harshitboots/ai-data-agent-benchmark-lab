@@ -42,7 +42,7 @@ docs = [
 arena = "arena.cli:app"
 
 [tool.setuptools.packages.find]
-include = ["arena*"]
+include = ["arena*", "agents*", "connectors*", "evaluators*"]
 
 [tool.ruff]
 line-length = 100

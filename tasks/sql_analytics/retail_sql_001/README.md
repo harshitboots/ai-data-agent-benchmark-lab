@@ -36,7 +36,7 @@ bigger.
 
 ## Status
 
-Task definition and fixtures are complete. The automated evaluator (runs
-agent-submitted SQL against these CSVs via DuckDB and diffs the result
-against `expected/expected_output.csv`) lands in Phase 2 — see
+Live end to end. Try it: `arena run --task retail_sql_001 --agent baseline`
+runs the checked-in baseline solution through the DuckDB connector and
+diffs it against `expected/expected_output.csv` — see
 [ROADMAP.md](../../../ROADMAP.md).

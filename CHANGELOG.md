@@ -7,6 +7,35 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## 2026-07-14 — Phase 2: evaluation engine
+
+### Added
+- `connectors/duckdb/` — loads task input CSVs into an in-memory DuckDB
+  connection (via DuckDB's own CSV reader, so dates/types infer correctly)
+  and runs SQL against them
+- `evaluators/sql_evaluator.py` — scores execution, correctness (exact diff
+  against `expected_output`), efficiency, explanation, and cost/latency for
+  a `sql_analytics` run; `evaluators/final_score.py` combines them using the
+  task's own weighted `scoring:` block
+- `agents/baseline_agent/` — deterministic, no-LLM agent implementing the
+  new `arena.agent.BaseAgent` interface; looks up a checked-in solution
+  under `solutions/<task_id>.sql`
+- `agents/custom_agent_template/template_agent.py` — the actual
+  `BaseAgent` skeleton contributors copy, referenced by `CONTRIBUTING.md`
+- `arena/runner.py`, `arena/scoring.py` — orchestrates agent → evaluator →
+  final score, and saves/loads run results under `runs/`
+- `arena run --task <id> --agent <name>` and `arena score --run latest` —
+  both work end-to-end against `retail_sql_001`
+- `agents/`, `connectors/`, `evaluators/` are now real installed packages
+  (`pyproject.toml`'s `packages.find.include`), not CWD-dependent imports
+- `tests/test_duckdb_connector.py`, `tests/test_sql_evaluator.py`,
+  `tests/test_runner.py` (9 new tests, 13 total passing)
+
+### Fixed
+- README's illustrative quick-start "Expected output" block (£ currency,
+  a "Hallucination Risk" field) never matched the real 5-dimension
+  `ScoringWeights` schema — replaced with actual `arena run` output
+
 ## 2026-07-03 — Phase 1: task schema & CLI skeleton
 
 ### Added

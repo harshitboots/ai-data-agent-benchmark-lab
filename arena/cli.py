@@ -6,6 +6,8 @@ from rich.panel import Panel
 from rich.table import Table
 
 from arena.config import TASK_FILE_GLOB, TASKS_DIR
+from arena.runner import AgentNotFoundError, UnsupportedCategoryError, run_task
+from arena.scoring import RunResult, load_latest_run
 from arena.task_loader import TaskNotFoundError, discover_tasks, load_task, load_task_by_id
 
 app = typer.Typer(
@@ -83,6 +85,64 @@ def validate_tasks() -> None:
 
     if failures:
         raise typer.Exit(code=1)
+
+
+def _render_run_result(result: RunResult) -> None:
+    header = (
+        f"Task: {result.task_id}    Agent: {result.agent_name}    "
+        f"Category: {result.category}    Elapsed: {result.elapsed_seconds:.2f}s"
+    )
+    console.print(header)
+    if result.error:
+        console.print(Panel(result.error, title="Agent error", border_style="red"))
+
+    table = Table(title="Score breakdown")
+    table.add_column("Dimension")
+    table.add_column("Score", justify="right")
+    table.add_column("Detail")
+    for name, dimension in result.dimensions.items():
+        table.add_row(name, str(dimension.score), dimension.detail)
+    console.print(table)
+    console.print(f"[bold]Final score: {result.final_score:.1f} / 100[/bold]")
+
+
+@app.command("run")
+def run(
+    task: str = typer.Option(..., "--task", help="Task ID, e.g. retail_sql_001"),
+    agent: str = typer.Option("baseline", "--agent", help="Agent to run, e.g. baseline"),
+) -> None:
+    """Run an agent against a task and score the result."""
+    try:
+        result = run_task(task, agent)
+    except (TaskNotFoundError, AgentNotFoundError, UnsupportedCategoryError) as exc:
+        console.print(Panel(str(exc), title="Run failed", border_style="red"))
+        raise typer.Exit(code=1)
+
+    _render_run_result(result)
+
+
+@app.command("score")
+def score(
+    run_id: str = typer.Option("latest", "--run", help="Which run to score (only 'latest' is supported today)"),
+) -> None:
+    """Show the score breakdown for a previous run."""
+    if run_id != "latest":
+        console.print(
+            Panel(
+                f"'{run_id}' is not supported — only 'latest' is supported today.",
+                title="Unsupported --run value",
+                border_style="red",
+            )
+        )
+        raise typer.Exit(code=1)
+
+    try:
+        result = load_latest_run()
+    except FileNotFoundError as exc:
+        console.print(Panel(str(exc), title="No runs found", border_style="red"))
+        raise typer.Exit(code=1)
+
+    _render_run_result(result)
 
 
 @app.command("version")

@@ -24,8 +24,12 @@ def discover_tasks(root: Path = TASKS_DIR) -> list[tuple[Path, TaskSpec]]:
     ]
 
 
-def load_task_by_id(task_id: str, root: Path = TASKS_DIR) -> TaskSpec:
-    for _, task in discover_tasks(root):
+def find_task(task_id: str, root: Path = TASKS_DIR) -> tuple[Path, TaskSpec]:
+    for task_dir, task in discover_tasks(root):
         if task.id == task_id:
-            return task
+            return task_dir, task
     raise TaskNotFoundError(f"No task found with id '{task_id}'")
+
+
+def load_task_by_id(task_id: str, root: Path = TASKS_DIR) -> TaskSpec:
+    return find_task(task_id, root)[1]

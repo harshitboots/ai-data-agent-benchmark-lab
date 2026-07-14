@@ -26,12 +26,12 @@ update the checkboxes as phases land instead of trusting memory or chat logs.
 - [x] `tests/test_task_loader.py`
 
 ## Phase 2 — Evaluation engine (Day 4–5)
-- [ ] `connectors/duckdb/` connector
-- [ ] `evaluators/sql_evaluator.py`, `evaluators/final_score.py`
-- [ ] `arena/runner.py`, `arena/scoring.py`
-- [ ] `agents/baseline_agent/` (deterministic, no LLM dependency)
-- [ ] `arena run --task retail_sql_001 --agent baseline` works end-to-end
-- [ ] `arena score --run latest` works end-to-end
+- [x] `connectors/duckdb/` connector
+- [x] `evaluators/sql_evaluator.py`, `evaluators/final_score.py`
+- [x] `arena/runner.py`, `arena/scoring.py`
+- [x] `agents/baseline_agent/` (deterministic, no LLM dependency)
+- [x] `arena run --task retail_sql_001 --agent baseline` works end-to-end
+- [x] `arena score --run latest` works end-to-end
 
 ## Phase 3 — Leaderboard (Day 6)
 - [ ] `arena/leaderboard.py`, `leaderboard/leaderboard_generator.py`

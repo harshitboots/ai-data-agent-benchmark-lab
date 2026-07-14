@@ -37,8 +37,12 @@ pre-commit install
 - [ ] `task.yaml` follows the schema in `tasks/_template/task.yaml`
 - [ ] Input data is synthetic (see [docs/dataset-policy.md](docs/dataset-policy.md))
 - [ ] No secrets, credentials, or PII anywhere in the task folder
-- [ ] `evaluator.py` runs standalone and returns a score breakdown
-- [ ] The baseline agent can run against the task (even if it scores low)
+- [ ] Your task's category has an evaluator under `evaluators/` (one
+      evaluator serves every task in a category — see
+      [docs/architecture.md](docs/architecture.md); add one if your
+      category doesn't have it yet)
+- [ ] The baseline agent can run against the task (even if it scores low) —
+      add a checked-in solution under `agents/baseline_agent/solutions/`
 - [ ] `README.md` explains the task in plain language
 
 ## Branch protection

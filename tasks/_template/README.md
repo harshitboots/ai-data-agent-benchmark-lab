@@ -13,8 +13,14 @@ contribution checklist. Reference implementation to copy the shape of:
 | `README.md` | Plain-language explanation of the task for humans (replace this file's contents with your task's own README). |
 | `input/` | The files the agent is given, listed in `task.yaml`'s `input_files`. |
 | `expected/` | The expected output, named to match `task.yaml`'s `expected_output`. |
-| `evaluator.py` | Scores an agent's output against `expected/`. Interface lands in Phase 2 — see [ROADMAP.md](../../ROADMAP.md). |
 | `metadata.json` | Free-form notes: dataset size, generation notes, reference dates used for any "trailing N months"-style logic. Keep any fixed reference dates here instead of using "today" — tasks must be reproducible regardless of when they're run. |
+
+There's no per-task `evaluator.py` — scoring is done by a shared evaluator
+per task **category** (e.g. every `sql_analytics` task is scored by
+[`evaluators/sql_evaluator.py`](../../evaluators/sql_evaluator.py), which
+diffs the agent's output against `expected/expected_output.csv`). If your
+task's category doesn't have an evaluator yet, it can't be run/scored until
+one is added — see [docs/architecture.md](../../docs/architecture.md).
 
 ## Rules
 

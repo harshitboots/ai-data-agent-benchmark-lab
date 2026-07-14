@@ -8,5 +8,5 @@
     "products": 8
   },
   "created": "2026-07-03",
-  "notes": "Hand-crafted, deterministic dataset sized for fast CI runs and hand-verifiable expected output. The DuckDB-based evaluator that runs the agent's SQL and diffs it against expected_output.csv arrives in Phase 2 (see ROADMAP.md)."
+  "notes": "Hand-crafted, deterministic dataset sized for fast CI runs and hand-verifiable expected output. The DuckDB-based evaluator that runs the agent's SQL and diffs it against expected_output.csv is live (see ROADMAP.md, Phase 2)."
 }

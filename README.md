@@ -47,8 +47,8 @@ This repo exists to make that measurable, reproducible, and public.
 
 ## Quick start
 
-> The commands below describe the target CLI. Phase 1 (task schema + CLI
-> skeleton) is in progress — see [ROADMAP.md](ROADMAP.md) for what's live today.
+> `list-tasks`, `show-task`, `run`, and `score` are live today. `arena
+> leaderboard` is still Phase 3 — see [ROADMAP.md](ROADMAP.md) for status.
 
 ```bash
 git clone https://github.com/harshitboots/ai-data-agent-benchmark-lab.git
@@ -58,21 +58,26 @@ pip install -e .
 arena list-tasks
 arena run --task retail_sql_001 --agent baseline
 arena score --run latest
-arena leaderboard
 ```
 
-Expected output:
+Actual output of `arena run --task retail_sql_001 --agent baseline` today,
+running the deterministic baseline agent against the real
+`retail_sql_001` task:
 
 ```text
-Task: retail_sql_001
-Agent: baseline
-Category: SQL Analytics
-Accuracy: 82%
-Execution Passed: Yes
-Cost: £0.04
-Latency: 7.2 sec
-Hallucination Risk: Low
-Final Score: 78.4 / 100
+Task: retail_sql_001    Agent: baseline    Category: sql_analytics    Elapsed: 0.00s
+
+                                Score breakdown
++-----------------------------------------------------------------------------+
+| Dimension    | Score | Detail                                               |
+|--------------+-------+------------------------------------------------------|
+| execution    |   100 | SQL executed successfully                            |
+| correctness  |   100 | output matches expected_output exactly               |
+| efficiency   |   100 | efficiency scoring is currently tied to execution... |
+| explanation  |     0 | no explanation provided                              |
+| cost_latency |   100 | cost=$0.0000, elapsed=0.00s (budget: $0.25, 120s)    |
++-----------------------------------------------------------------------------+
+Final score: 90.0 / 100
 ```
 
 ## What can be benchmarked
@@ -89,20 +94,21 @@ Final Score: 78.4 / 100
 | Cost optimisation | Recommend a fix for a full-scan query | Recommendation checklist |
 | Agent governance | Does the agent leak secrets or exceed a cost limit? | Safety checklist |
 
-Full category list in [docs/architecture.md](docs/architecture.md) (arriving Phase 7) and the [tasks/](tasks/) directory.
+Full category list in [docs/architecture.md](docs/architecture.md) and the [tasks/](tasks/) directory.
 
 ## How scoring works
 
-Every run produces a deterministic-first score:
+Every task defines its own weights across five dimensions — `execution`,
+`correctness`, `efficiency`, `explanation`, `cost_latency` — summing to 100,
+e.g. `retail_sql_001` weights it:
 
 ```text
-Correctness 40% · Execution 20% · Reasoning 15% · Efficiency 10% · Cost 5% · Latency 5% · Safety 5%
+Correctness 40% · Execution 30% · Efficiency 10% · Explanation 10% · Cost/Latency 10%
 ```
 
 Deterministic checks (does the SQL run, does the output match, do unit tests
 pass) are weighted over LLM-judge opinions wherever a deterministic check is
-possible. See [docs/scoring-methodology.md](docs/scoring-methodology.md)
-(arriving Phase 7).
+possible. See [docs/scoring-methodology.md](docs/scoring-methodology.md).
 
 ## Architecture
 
@@ -110,7 +116,7 @@ possible. See [docs/scoring-methodology.md](docs/scoring-methodology.md)
 Task Registry → Agent Runner → Tool Sandbox → Evaluators → Score Engine → Leaderboard
 ```
 
-Full diagram in [docs/architecture.md](docs/architecture.md) (arriving Phase 7).
+Full diagram in [docs/architecture.md](docs/architecture.md).
 
 ## Enterprise / private use
 
