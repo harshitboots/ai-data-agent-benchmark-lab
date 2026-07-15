@@ -1,7 +1,11 @@
+import json
 import time
+from dataclasses import asdict
+from pathlib import Path
 
 from agents.baseline_agent import BaselineAgent
 from arena.agent import BaseAgent
+from arena.config import SUBMISSIONS_DIR
 from arena.scoring import RunResult, save_run
 from arena.task_loader import TaskNotFoundError, find_task
 from evaluators import sql_evaluator
@@ -60,9 +64,21 @@ def run_task(task_id: str, agent_name: str) -> RunResult:
     return result
 
 
+def submit_run(result: RunResult, submitted_by: str) -> Path:
+    """Write a run result into leaderboard/submissions/ for the public leaderboard."""
+    SUBMISSIONS_DIR.mkdir(parents=True, exist_ok=True)
+    path = SUBMISSIONS_DIR / f"{result.task_id}__{result.agent_name}__{submitted_by}.json"
+
+    payload = asdict(result)
+    payload["submitted_by"] = submitted_by
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    return path
+
+
 __all__ = [
     "AgentNotFoundError",
     "UnsupportedCategoryError",
     "TaskNotFoundError",
     "run_task",
+    "submit_run",
 ]

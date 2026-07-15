@@ -1,0 +1,35 @@
+name: Update leaderboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "leaderboard/submissions/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "leaderboard/submissions/**"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install package
+        run: pip install -e .
+
+      - name: Regenerate leaderboard and diff against committed artifacts
+        run: |
+          python -m leaderboard.leaderboard_generator
+          git diff --exit-code -- leaderboard/results.json leaderboard/leaderboard.md || {
+            echo "::error::leaderboard/results.json and/or leaderboard.md are out of date." \
+                 "Run 'arena leaderboard' locally and commit the result.";
+            exit 1;
+          }

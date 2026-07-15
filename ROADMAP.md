@@ -34,10 +34,13 @@ update the checkboxes as phases land instead of trusting memory or chat logs.
 - [x] `arena score --run latest` works end-to-end
 
 ## Phase 3 — Leaderboard (Day 6)
-- [ ] `arena/leaderboard.py`, `leaderboard/leaderboard_generator.py`
-- [ ] `leaderboard/results.json`, `leaderboard/leaderboard.md`
-- [ ] `arena leaderboard` command
-- [ ] `.github/workflows/update-leaderboard.yml`
+- [x] `arena/leaderboard.py`, `leaderboard/leaderboard_generator.py`
+- [x] `leaderboard/results.json`, `leaderboard/leaderboard.md`
+- [x] `arena leaderboard` command (plus `arena run --submit` to publish a
+      result into `leaderboard/submissions/`)
+- [x] `.github/workflows/update-leaderboard.yml` (verifies submissions are
+      reflected in the committed leaderboard artifacts, rather than
+      auto-committing — `main` requires a PR, see CONTRIBUTING.md)
 
 ## Phase 4 — More task categories (Day 7–8)
 - [ ] PySpark task + `pyspark_evaluator.py`
@@ -50,9 +53,11 @@ update the checkboxes as phases land instead of trusting memory or chat logs.
 - [ ] `agents/custom_agent_template/` with docs for contributors
 
 ## Phase 6 — Contribution infrastructure (Day 10)
-- [ ] Issue templates, PR template, labels
-- [ ] `.github/workflows/test.yml`, `validate-task.yml`, `secret-scan.yml`
-- [ ] `tests/` covering task loader, runner, scoring, sql evaluator
+- [x] Issue templates, PR template, labels
+- [x] `.github/workflows/test.yml`, `validate-task.yml`, `secret-scan.yml`
+- [x] `tests/` covering task loader, runner, sql evaluator, duckdb connector
+      (scoring math still only covered indirectly via the runner test — see
+      Phase 3)
 
 ## Phase 7 — Docs site (Day 11)
 - [ ] MkDocs setup, `docs/` content, architecture diagram

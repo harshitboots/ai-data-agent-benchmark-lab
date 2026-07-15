@@ -1,3 +1,4 @@
+import subprocess
 from importlib.metadata import version as pkg_version
 
 import typer
@@ -6,7 +7,8 @@ from rich.panel import Panel
 from rich.table import Table
 
 from arena.config import TASK_FILE_GLOB, TASKS_DIR
-from arena.runner import AgentNotFoundError, UnsupportedCategoryError, run_task
+from arena.leaderboard import build_leaderboard
+from arena.runner import AgentNotFoundError, UnsupportedCategoryError, run_task, submit_run
 from arena.scoring import RunResult, load_latest_run
 from arena.task_loader import TaskNotFoundError, discover_tasks, load_task, load_task_by_id
 
@@ -106,10 +108,29 @@ def _render_run_result(result: RunResult) -> None:
     console.print(f"[bold]Final score: {result.final_score:.1f} / 100[/bold]")
 
 
+def _default_submitted_by() -> str:
+    try:
+        name = subprocess.run(
+            ["git", "config", "user.name"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+        return name or "anonymous"
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "anonymous"
+
+
 @app.command("run")
 def run(
     task: str = typer.Option(..., "--task", help="Task ID, e.g. retail_sql_001"),
     agent: str = typer.Option("baseline", "--agent", help="Agent to run, e.g. baseline"),
+    submit: bool = typer.Option(
+        False, "--submit", help="Also write this run into leaderboard/submissions/"
+    ),
+    submitted_by: str | None = typer.Option(
+        None, "--submitted-by", help="Name to submit under (defaults to `git config user.name`)"
+    ),
 ) -> None:
     """Run an agent against a task and score the result."""
     try:
@@ -119,6 +140,11 @@ def run(
         raise typer.Exit(code=1)
 
     _render_run_result(result)
+
+    if submit:
+        who = submitted_by or _default_submitted_by()
+        path = submit_run(result, who)
+        console.print(f"Submitted as [bold]{who}[/bold] -> {path}")
 
 
 @app.command("score")
@@ -143,6 +169,44 @@ def score(
         raise typer.Exit(code=1)
 
     _render_run_result(result)
+
+
+@app.command("leaderboard")
+def leaderboard(
+    task: str | None = typer.Option(None, "--task", help="Only show this task's rankings"),
+) -> None:
+    """Regenerate leaderboard/results.json + leaderboard.md from submissions and display it."""
+    data = build_leaderboard()
+
+    if not data:
+        console.print(
+            "[yellow]No submissions yet — run `arena run --task ... --agent ... --submit` "
+            "or see leaderboard/submissions/README.md.[/yellow]"
+        )
+        raise typer.Exit(code=0)
+
+    task_ids = [task] if task else sorted(data)
+    for task_id in task_ids:
+        entries = data.get(task_id)
+        if not entries:
+            console.print(f"[yellow]No submissions for '{task_id}'.[/yellow]")
+            continue
+
+        table = Table(title=task_id)
+        table.add_column("Rank", justify="right")
+        table.add_column("Agent")
+        table.add_column("Score", justify="right")
+        table.add_column("Submitted by")
+        table.add_column("Timestamp")
+        for entry in entries:
+            table.add_row(
+                str(entry.rank),
+                entry.agent_name,
+                f"{entry.final_score:.1f}",
+                entry.submitted_by,
+                entry.timestamp,
+            )
+        console.print(table)
 
 
 @app.command("version")

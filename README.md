@@ -47,8 +47,8 @@ This repo exists to make that measurable, reproducible, and public.
 
 ## Quick start
 
-> `list-tasks`, `show-task`, `run`, and `score` are live today. `arena
-> leaderboard` is still Phase 3 — see [ROADMAP.md](ROADMAP.md) for status.
+> `list-tasks`, `show-task`, `run`, `score`, and `leaderboard` are all live
+> today — see [ROADMAP.md](ROADMAP.md) for what's next.
 
 ```bash
 git clone https://github.com/harshitboots/ai-data-agent-benchmark-lab.git
@@ -56,8 +56,8 @@ cd ai-data-agent-benchmark-lab
 
 pip install -e .
 arena list-tasks
-arena run --task retail_sql_001 --agent baseline
-arena score --run latest
+arena run --task retail_sql_001 --agent baseline --submit
+arena leaderboard
 ```
 
 Actual output of `arena run --task retail_sql_001 --agent baseline` today,

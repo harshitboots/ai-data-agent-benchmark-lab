@@ -7,6 +7,30 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## 2026-07-15 — Phase 3: leaderboard
+
+### Added
+- `leaderboard/leaderboard_generator.py` — aggregates
+  `leaderboard/submissions/*.json` into `leaderboard/results.json` and a
+  rendered `leaderboard/leaderboard.md`, ranked per task by `final_score`,
+  deduped to the newest submission per (task, agent, submitter); runnable
+  standalone via `python -m leaderboard.leaderboard_generator`
+- `arena/leaderboard.py`, `arena leaderboard` command (optional `--task`
+  filter) — regenerates and renders the leaderboard as a table
+- `arena run --submit [--submitted-by NAME]` — publishes a run into
+  `leaderboard/submissions/` (defaults `--submitted-by` to `git config
+  user.name`, falling back to `"anonymous"`); reuses the existing
+  `RunResult` shape, no new schema
+- `leaderboard/submissions/retail_sql_001__baseline__harshitboots.json` —
+  seeded with a real `arena run --submit` result, not a hand-written fixture
+- `.github/workflows/update-leaderboard.yml` — verifies (doesn't
+  auto-commit) that `leaderboard/results.json`/`leaderboard.md` match what
+  the generator produces from `leaderboard/submissions/`; auto-committing
+  would hit the same PR-required branch protection on `main` that everyone
+  else is subject to
+- `leaderboard*` is now a real installed package (`pyproject.toml`)
+- `tests/test_leaderboard.py` (5 new tests, 18 total passing)
+
 ## 2026-07-14 — Phase 2: evaluation engine
 
 ### Added

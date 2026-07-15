@@ -38,13 +38,14 @@ Task Registry → Agent Runner → Tool Sandbox → Evaluators → Score Engine 
 | [`agents/`](../agents/) | Agent Runner (implementations) | Live for `sql_analytics` — `baseline_agent/` (deterministic); `custom_agent_template/` defines the `BaseAgent` contract other agents implement against |
 | [`connectors/`](../connectors/) | Tool Sandbox | Live: `duckdb/`. Stubs: `sqlite/`, `csv/`, `parquet/`, `postgres/`, mock warehouse connectors |
 | [`evaluators/`](../evaluators/) | Evaluators | Live: `sql_evaluator.py`, `final_score.py`. Stubs for other task categories |
-| [`leaderboard/`](../leaderboard/) | Leaderboard | Stubs — `results.json` + generated markdown (Phase 3) |
+| [`leaderboard/`](../leaderboard/) | Leaderboard | Live — `leaderboard_generator.py`, `results.json`, `leaderboard.md`, `submissions/` |
 | [`datasets/`](../datasets/) | Synthetic data backing tasks | Stubs — see [dataset-policy.md](dataset-policy.md) |
 
-`arena run --task retail_sql_001 --agent baseline` and `arena score --run
-latest` work end to end today. The pipeline above is fully wired for the
-`sql_analytics` category; other categories (PySpark, dbt, RAG, ...) need
-their own connector/evaluator before `arena run` supports them — see
+`arena run --task retail_sql_001 --agent baseline`, `arena score --run
+latest`, `arena run ... --submit` and `arena leaderboard` all work end to
+end today. The pipeline above is fully wired for the `sql_analytics`
+category; other categories (PySpark, dbt, RAG, ...) need their own
+connector/evaluator before `arena run` supports them — see
 [ROADMAP.md](../ROADMAP.md) for what's next.
 
 ## Design principles

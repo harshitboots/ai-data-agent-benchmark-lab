@@ -1,0 +1,32 @@
+{
+  "task_id": "retail_sql_001",
+  "agent_name": "baseline",
+  "category": "sql_analytics",
+  "dimensions": {
+    "execution": {
+      "score": 100,
+      "detail": "SQL executed successfully"
+    },
+    "correctness": {
+      "score": 100,
+      "detail": "output matches expected_output exactly"
+    },
+    "efficiency": {
+      "score": 100,
+      "detail": "efficiency scoring is currently tied to execution success (v1 placeholder)"
+    },
+    "explanation": {
+      "score": 0,
+      "detail": "no explanation provided"
+    },
+    "cost_latency": {
+      "score": 100,
+      "detail": "cost=$0.0000, elapsed=0.00s (budget: $0.25, 120s)"
+    }
+  },
+  "final_score": 90.0,
+  "elapsed_seconds": 0.00013930001296103,
+  "timestamp": "2026-07-15T21:26:04+00:00",
+  "error": null,
+  "submitted_by": "harshitboots"
+}
